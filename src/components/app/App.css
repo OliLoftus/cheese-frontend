@@ -1,3 +1,7 @@
+*{
+  cursor: none;
+}
+
 .App {
   text-align: center;
 }
@@ -26,6 +30,16 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.cursor {
+  cursor: pointer;
+  background-color: aqua;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  position: fixed;
+
 }
 
 @keyframes App-logo-spin {
