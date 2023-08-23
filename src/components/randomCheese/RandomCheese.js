@@ -1,22 +1,20 @@
-import {useState, useEffect} from 'react';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom'; 
-import LogInForm from './/../auth/LoginForm';
-import API_URL from '../config';
+import { useState, useEffect } from "react";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
+import LogInForm from ".//../auth/LoginForm";
+import API_URL from "../config";
 
 const RandomCheese = () => {
     const [cheese, setCheese] = useState([]);
-    const navigate = useNavigate(); 
-    const [token] = useState(window.localStorage.getItem("token"))
-    
+    const navigate = useNavigate();
+    const [token] = useState(window.localStorage.getItem("token"));
+
     useEffect(() => {
-        fetch(`${API_URL}/api/cheeses/random`)
-        .then((response) => {
-            response.json()
-            .then((data) => {
+        fetch(`${API_URL}/api/cheeses/random`).then((response) => {
+            response.json().then((data) => {
                 setCheese(data);
             });
         });

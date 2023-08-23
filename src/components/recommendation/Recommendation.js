@@ -1,26 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import RatingComponent from "../rating/Rating";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import API_URL from "../config";
+import Typography from "@mui/material/Typography";
+import React, { useEffect, useState } from "react";
+import RatingComponent from "../rating/Rating";
+import Box from "@mui/material/Box";
 
-const IndividualCheeseComponent = () => {
-    const [cheese, setCheese] = useState({});
-    const { id } = useParams();
+const RecommendationComponent = () => {
+    const [cheese, setCheeseRecommendation] = useState([]);
+    const [highestRatedType, setType] = useState([]);
+    const [token] = useState(window.localStorage.getItem("token"));
 
     useEffect(() => {
-        const fetchCheese = async () => {
-            const response = await fetch(`${API_URL}/api/cheeses/${id}`);
-            const data = await response.json();
-            setCheese(data);
+        const fetchCheeseRecommendation = async () => {
+            try {
+                const response = await fetch(
+                    `/api/ratings/cheese/recommendation`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                const data = await response.json();
+                setCheeseRecommendation(data.cleanRandomCheese);
+                setType(data.highestRatedCheeseType);
+            } catch (error) {
+                console.error("Error fetching cheese recommendation", error);
+            }
         };
-        fetchCheese();
-    }, [id]);
-
-    if (!cheese.name) {
-        return <h1>404 error, cheese not found! </h1>;
-    }
+        fetchCheeseRecommendation();
+    }, [token]);
 
     const link = cheese.image;
     return (
@@ -33,6 +43,9 @@ const IndividualCheeseComponent = () => {
                 margin: "50px",
             }}
         >
+            <Typography style={{ marginTop: "10px" }} variant="h4">
+                Here's your recommendation:
+            </Typography>
             <img
                 src={link}
                 alt={cheese.name}
@@ -45,6 +58,17 @@ const IndividualCheeseComponent = () => {
             />
             <Typography style={{ marginTop: "10px" }} variant="h4">
                 {cheese.name}
+            </Typography>
+            <Typography
+                variant="h2"
+                style={{
+                    fontSize: "18px",
+                    fontWeight: "600",
+                    marginTop: "10px",
+                }}
+            >
+                This cheese was suggested because your highest rated cheese type
+                is {highestRatedType}
             </Typography>
             <Typography
                 variant="h2"
@@ -221,9 +245,9 @@ const IndividualCheeseComponent = () => {
             <Typography variant="p" className="randomCheeseFields">
                 {cheese.vegetarian ? cheese.vegetarian : "Unknown"}
             </Typography>
-            <RatingComponent cheeseId={id} />
+            <RatingComponent cheeseId={cheese.cheeseId} />
         </Box>
     );
 };
 
-export default IndividualCheeseComponent;
+export default RecommendationComponent;
