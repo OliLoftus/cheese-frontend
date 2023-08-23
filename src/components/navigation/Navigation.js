@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import logoIcon from ".//../app/cheese.png";
+import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import StyledButton from "../app/styledButton";
 
 const currentURL = window.location.href;
@@ -113,6 +114,29 @@ const NavigationBar = () => {
                                 </MenuItem>
                             ))}
                         </Menu>
+                        <Button
+                            style={{
+                                display: token ? "inline" : "none",
+                                marginRight: "10px",
+                            }}
+                            data-cy="recommendation"
+                            to="/recommendation"
+                            color="inherit"
+                            component={Link}
+                        >
+                            <EmojiObjectsIcon
+                                style={{ position: "relative", top: "5px" }}
+                            />
+                            <span
+                                style={{
+                                    position: "relative",
+                                    top: "-2px",
+                                    left: "5px",
+                                }}
+                            >
+                                Get recommendation
+                            </span>
+                        </Button>
                         <Button
                             style={{
                                 display: token ? "none" : "inline",
