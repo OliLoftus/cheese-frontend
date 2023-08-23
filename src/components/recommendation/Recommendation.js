@@ -106,7 +106,11 @@ const RecommendationComponent = () => {
             >
                 Description:{" "}
             </Typography>
-            <Typography variant="p" className="randomCheeseFields">
+            <Typography
+                data-cy="description"
+                variant="p"
+                className="randomCheeseFields"
+            >
                 {cheese.description}
             </Typography>
             <Typography
