@@ -22,9 +22,16 @@ const RecommendationComponent = () => {
                         },
                     }
                 );
-                const data = await response.json();
-                setCheeseRecommendation(data.cleanRandomCheese);
-                setType(data.highestRatedCheeseType);
+                if (response.status === 401) {
+                    window.location.href = "/";
+                }
+                if (response.status === 200) {
+                    const data = await response.json();
+                    setCheeseRecommendation(data.cleanRandomCheese);
+                    setType(data.highestRatedCheeseType);
+                } else {
+                    console.error("Error fetching cheese recommendation");
+                }
             } catch (error) {
                 console.error("Error fetching cheese recommendation", error);
             }
