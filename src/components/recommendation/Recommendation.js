@@ -13,7 +13,7 @@ const RecommendationComponent = () => {
         const fetchCheeseRecommendation = async () => {
             try {
                 const response = await fetch(
-                    `/api/ratings/cheese/recommendation`,
+                    `${API_URL}/api/ratings/get/recommendation`,
                     {
                         method: "GET",
                         headers: {
